@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quickstart &mdash; Schlably 0.0.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tutorials" href="tutorials.html" />
+    <link rel="prev" title="Installation" href="installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Schlably
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Table of Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#data-generation">Data Generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#training">Training</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#testing">Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#advanced-config-handling">Advanced config handling</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Schlably</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Quickstart</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/quickstart.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="quickstart">
+<h1>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this heading"></a></h1>
+<section id="data-generation">
+<h2>Data Generation<a class="headerlink" href="#data-generation" title="Permalink to this heading"></a></h2>
+<p>To create your own data, or more precisely, instances of a scheduling problem, proceed as follows:</p>
+<ol class="arabic">
+<li><p>Create a custom data generation configuration from one of the configs listed in <em>config/data_generation/fjssp</em> or <em>config/data_generation/jssp</em> (e.g. change number of machines, tasks, tools, runtimes etc.) to specify the generated instances.</p></li>
+<li><p>Run</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python -m src.data_generator.instance_factory -fp data_generation/jssp/&lt;your_data_generation_config&gt;.yaml
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+<section id="training">
+<h2>Training<a class="headerlink" href="#training" title="Permalink to this heading"></a></h2>
+<p>To train your own model, proceed as follows:</p>
+<ol class="arabic">
+<li><p>To train a model, you need to specify a training config, such as the ones already included in <em>config/training</em>. Note that different agents have different configs because the come with different algorithm parameters. You can customize the config to your needs, e.g. change the number of episodes, the learning rate, the batch size etc.
+We are using weights &amp; biases (wandb) to track our results.
+If you want to track your results online, create your project at wandb.ai and set config parameter wandb_mode to 1 (offline tracking) or 2 (online tracking)
+and specify <em>wandb_project</em> parameter in config file and <em>wandb_entity</em> constant in the <em>logger.py</em> file.</p></li>
+<li><p>Run</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python -m src.agents.train -fp training/ppo/&lt;your_training_config&gt;.yaml
+</pre></div>
+</div>
+</li>
+</ol>
+<p>Immediately after training the model will be tested and benchmarked against all heuristics included in the TEST_HEURISTICS constant located in <em>src/agents/test.py</em>.
+The trained model can be accessed via the experiment_save_path and saved_model_name you specified in the training config.</p>
+</section>
+<section id="testing">
+<h2>Testing<a class="headerlink" href="#testing" title="Permalink to this heading"></a></h2>
+<p>As aforementioned, calling <code class="docutils literal notranslate"><span class="pre">train.py</span></code> automatically tests the model once training is complete. If you want to test a certain model again, or benchmark it against other heuristics, proceed as follows:</p>
+<ol class="arabic">
+<li><p>As in training, you need to point to a testing config file like the ones provided in <em>config/testing</em>.  You may change entries according to your needs.
+We provide a pre-trained PPO model. Thus, creating a config in <em>config/testing/ppo</em> and assigning <em>example_ppo_agent</em> to <em>saved_model_name</em> allows you to test without training first.</p></li>
+<li><p>Run</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python -m src.agents.test -fp testing/ppo/&lt;your_testing_config&gt;.yaml
+</pre></div>
+</div>
+</li>
+<li><p>Optionally, you may use the parameter –plot-ganttchart to plot the test results.</p></li>
+</ol>
+<p>We have pre-implemented many common priority dispatching rules, such as Shortest Processing Time first, and a flexible optimal solver.</p>
+</section>
+<section id="advanced-config-handling">
+<h2>Advanced config handling<a class="headerlink" href="#advanced-config-handling" title="Permalink to this heading"></a></h2>
+<p>On the one hand running data_generation, training or testing by specifying a config file path offers an easy and comfortable way to use this framework, but on the other hand it might seem a bit restrictive.
+Therefore, there is the possibility to start all three files by passing a config dictionary to their main functions.
+This comes in handy, if you need to loop across multiple configs or if you want to change single parameters without saving new config files.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Please check out the tutorials for further information on how to use the framework.</p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="tutorials.html" class="btn btn-neutral float-right" title="Tutorials" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, AlphaMES-Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

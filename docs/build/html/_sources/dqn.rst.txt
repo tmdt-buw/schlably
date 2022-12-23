@@ -1,0 +1,4 @@
+.. automodule:: agents.reinforcement_learning.dqn
+   :members:
+   :undoc-members:
+   :show-inheritance:

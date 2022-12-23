@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Custom Problem Settings &mdash; Schlably 0.0.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Looping over Configuration Parameters" href="looping_over_config_params.html" />
+    <link rel="prev" title="Tutorials" href="tutorials.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Schlably
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Table of Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="tutorials.html">Tutorials</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Custom Problem Settings</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#creating-the-problem-instances">Creating the problem instances</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#training-the-agents">Training the agents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="looping_over_config_params.html">Looping over Configuration Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weights_and_biases_sweeps.html">Weights &amp; Biases sweeps</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Schlably</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="tutorials.html">Tutorials</a> &raquo;</li>
+      <li>Custom Problem Settings</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/custom_problem_setting.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="custom-problem-settings">
+<h1>Custom Problem Settings<a class="headerlink" href="#custom-problem-settings" title="Permalink to this heading"></a></h1>
+<p>To illustrate a typical use case consider that you want to compare the learning behaviors of two different PPO agents.
+For simplicities sake, we will assume that the two agents are trained with the same general hyperparameters,
+but differ in the problem setting and size and reward function:</p>
+<p><strong>Agent One:</strong></p>
+<ul>
+<li><p>trained on 3x4 tool constrained JSSP instances. There are three unique tools in the problem setting, and each job
+needs exactly one of them.</p></li>
+<li><p>reward function:</p>
+<blockquote>
+<div><div class="math notranslate nohighlight">
+\[reward(t) = makespan(t-1) - makespan(t)\]</div>
+</div></blockquote>
+</li>
+</ul>
+<p><strong>Agent Two:</strong></p>
+<ul>
+<li><p>trained on 6x6 JSSP instances</p></li>
+<li><p>reward function:</p>
+<blockquote>
+<div><div class="math notranslate nohighlight">
+\[\begin{split}reward = \left\{ \begin{array}{rcl}
+0 &amp; \mbox{if} &amp; \mbox{intermediate step} \\
+makespan &amp; \mbox{if} &amp; \mbox{last step (schedule finished)}
+\end{array}\right.\end{split}\]</div>
+</div></blockquote>
+</li>
+</ul>
+<section id="creating-the-problem-instances">
+<h2>Creating the problem instances<a class="headerlink" href="#creating-the-problem-instances" title="Permalink to this heading"></a></h2>
+<p>To create the instances for <strong>Agent One</strong>, we set up a new config file (it is easiest to copy an existing one)
+in <em>config/data_generation/jssp</em> which we call <em>config_job3_task4_tools0.yaml</em> which contains the following:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1">##############################################################################</span><span class="w"></span>
+<span class="c1">###                         Data generation                                ###</span><span class="w"></span>
+<span class="c1">##############################################################################</span><span class="w"></span>
+
+<span class="c1"># (R) [str] Type of your scheduling problem - this template is for jssp</span><span class="w"></span>
+<span class="nt">sp_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">jssp</span><span class="w"></span>
+<span class="c1"># (O)   [string]  Filename under the generated data will be saved (subdirectory is chosen by sp_type)</span><span class="w"></span>
+<span class="nt">instances_file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">config_job3_task4_tools3.pkl</span><span class="w"></span>
+<span class="c1"># (O)   [int]     Seed for all pseudo random generators (random, numpy, torch)</span><span class="w"></span>
+<span class="nt">seed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w"></span>
+<span class="c1"># (R) [int] Number of jobs to be scheduled</span><span class="w"></span>
+<span class="nt">num_jobs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span><span class="w"></span>
+<span class="c1"># (R) [int] Number of tasks per job to be scheduled (has to be equal to num_machines for jssp)</span><span class="w"></span>
+<span class="nt">num_tasks</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span><span class="w"></span>
+<span class="c1"># (R) [int] Number of available machines (has to be equal to num_tasks for jssp)</span><span class="w"></span>
+<span class="nt">num_machines</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span><span class="w"></span>
+<span class="c1"># (O) [int] Number of available tools to be scheduled</span><span class="w"></span>
+<span class="nt">num_tools</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span><span class="w"></span>
+<span class="c1"># (O) [list[int]] Duration of tasks are samples uniformly from this list</span><span class="w"></span>
+<span class="nt">runtimes</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">2</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">4</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">6</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">8</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">10</span><span class="p p-Indicator">]</span><span class="w"></span>
+<span class="c1"># (R) [int] Number of instances (instances of the scheduling problem) to be generated</span><span class="w"></span>
+<span class="nt">num_instances</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1250</span><span class="w"></span>
+<span class="c1"># (O) [int] Number of parallel processes used to calculate the instances</span><span class="w"></span>
+<span class="nt">num_processes</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"></span>
+<span class="c1"># (O) [bool] Save the generated data in a file</span><span class="w"></span>
+<span class="nt">write_to_file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span><span class="w"></span>
+</pre></div>
+</div>
+<p>After saving the file you can run the following command to generate the instances:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">src</span><span class="o">.</span><span class="n">data_generation</span><span class="o">.</span><span class="n">generate_data</span> <span class="o">--</span><span class="n">fp</span> <span class="n">config</span><span class="o">/</span><span class="n">data_generation</span><span class="o">/</span><span class="n">jssp</span><span class="o">/</span><span class="n">config_job3_task4_tools3</span><span class="o">.</span><span class="n">yaml</span>
+</pre></div>
+</div>
+<p>You should find the file in <em>data/jssp/config_job3_task4_tools3.pkl</em>.</p>
+<p>To create the instances for <strong>Agent Two</strong>, we set up a new config file (it is easiest to copy an existing one)
+in <em>config/data_generation/jssp</em> which we call <em>config_job6_task6_tools0.yaml</em> which contains the following:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1">##############################################################################</span><span class="w"></span>
+<span class="c1">###                         Data generation                                ###</span><span class="w"></span>
+<span class="c1">##############################################################################</span><span class="w"></span>
+
+<span class="c1"># (R) [str] Type of your scheduling problem - this template is for jssp</span><span class="w"></span>
+<span class="nt">sp_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">jssp</span><span class="w"></span>
+<span class="c1"># (O)   [string]  Filename under the generated data will be saved (subdirectory is chosen by sp_type)</span><span class="w"></span>
+<span class="nt">instances_file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">config_job6_task6_tools0.pkl</span><span class="w"></span>
+<span class="c1"># (O)   [int]     Seed for all pseudo random generators (random, numpy, torch)</span><span class="w"></span>
+<span class="nt">seed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w"></span>
+<span class="c1"># (R) [int] Number of jobs to be scheduled</span><span class="w"></span>
+<span class="nt">num_jobs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">6</span><span class="w"></span>
+<span class="c1"># (R) [int] Number of tasks per job to be scheduled (has to be equal to num_machines for jssp)</span><span class="w"></span>
+<span class="nt">num_tasks</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">6</span><span class="w"></span>
+<span class="c1"># (R) [int] Number of available machines (has to be equal to num_tasks for jssp)</span><span class="w"></span>
+<span class="nt">num_machines</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">6</span><span class="w"></span>
+<span class="c1"># (O) [int] Number of available tools to be scheduled</span><span class="w"></span>
+<span class="nt">num_tools</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w"></span>
+<span class="c1"># (O) [list[int]] Duration of tasks are samples uniformly from this list</span><span class="w"></span>
+<span class="nt">runtimes</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">2</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">4</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">6</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">8</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">10</span><span class="p p-Indicator">]</span><span class="w"></span>
+<span class="c1"># (R) [int] Number of instances (instances of the scheduling problem) to be generated</span><span class="w"></span>
+<span class="nt">num_instances</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1250</span><span class="w"></span>
+<span class="c1"># (O) [int] Number of parallel processes used to calculate the instances</span><span class="w"></span>
+<span class="nt">num_processes</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"></span>
+<span class="c1"># (O) [bool] Save the generated data in a file</span><span class="w"></span>
+<span class="nt">write_to_file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span><span class="w"></span>
+</pre></div>
+</div>
+<p>After saving the file you can run the following command to generate the instances:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">src</span><span class="o">.</span><span class="n">data_generation</span><span class="o">.</span><span class="n">generate_data</span> <span class="o">--</span><span class="n">fp</span> <span class="n">config</span><span class="o">/</span><span class="n">data_generation</span><span class="o">/</span><span class="n">jssp</span><span class="o">/</span><span class="n">config_job6_task6_tools0</span><span class="o">.</span><span class="n">yaml</span>
+</pre></div>
+</div>
+<p>You should find the file in <em>data/jssp/config_job6_task6_tools0.pkl</em>.</p>
+</section>
+<section id="training-the-agents">
+<h2>Training the agents<a class="headerlink" href="#training-the-agents" title="Permalink to this heading"></a></h2>
+<p>To train the agents, we set up two new config files (again, it is easiest to copy an existing one)
+in <em>config/training/jssp</em> which we call <em>config_job3_task4_tools3.yaml</em> and <em>config_job6_task6_tools0.yaml</em>.</p>
+<p><em>config_job3_task4_tools3.yaml</em> should look like this:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1">##############################################################################</span><span class="w"></span>
+<span class="c1">###                         Training                                       ###</span><span class="w"></span>
+<span class="c1">##############################################################################</span><span class="w"></span>
+
+<span class="c1"># (R)   [String]  RL algorithm you want to use - This template is for PPO</span><span class="w"></span>
+<span class="nt">algorithm</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ppo_masked</span><span class="w"></span>
+<span class="c1"># (R)   [string]  Path to the file with generated data that to be used for training</span><span class="w"></span>
+<span class="nt">instances_file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">jssp/config_job3_task4_tools0.pkl</span><span class="w"></span>
+<span class="c1"># (O)   [string]  The finished model is saved under this name. Alternatively set to &lt;automatic&gt;, then it will be</span><span class="w"></span>
+<span class="w">                  </span><span class="c1"># replaced with the current DayMonthYearHourMinute</span><span class="w"></span>
+<span class="nt">saved_model_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example_ppo_masked_agent</span><span class="w"></span>
+<span class="c1"># (R)   [int]     Seed for all pseudo random generators (random, numpy, torch)</span><span class="w"></span>
+<span class="nt">seed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span><span class="w"></span>
+<span class="c1"># (O)   [bool]    Bool, if the train-test-split of instances should remain the same (1111) and be independent of the</span><span class="w"></span>
+<span class="w">                  </span><span class="c1"># random seed. This is useful for hyperparameter-sweeps with multiple random seeds to keep the same</span><span class="w"></span>
+<span class="w">                  </span><span class="c1"># test instances for comparability. Irrelevant, if the random seed across runs remains the same.</span><span class="w"></span>
+<span class="nt">overwrite_split_seed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span><span class="w"></span>
+<span class="c1"># (R)   [string]  Set an individual description that you can identify this training run  more easily later on.</span><span class="w"></span>
+<span class="w">                  </span><span class="c1"># This will be used in &quot;weights and biases&quot; as well</span><span class="w"></span>
+<span class="nt">config_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tasks_3x4</span><span class="w"></span>
+<span class="c1"># (O)   [string]  Set a directory where you want to save the agent model</span><span class="w"></span>
+<span class="nt">experiment_save_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">models</span><span class="w"></span>
+<span class="c1"># (O)   [int]:    Wandb mode choose: choose from [0: no wandb, 1: wandb_offline, 2: wandb_online]</span><span class="w"></span>
+<span class="nt">wandb_mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span><span class="w"></span>
+<span class="c1"># (O)   [string]  Set a wandb project where you want to upload all wandb logs</span><span class="w"></span>
+<span class="nt">wandb_project</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ppo_tutorial_test</span><span class="w"></span>
+
+<span class="c1"># --- PPO parameter ---</span><span class="w"></span>
+<span class="c1"># (O)   [int]     Number of steps collected before PPO updates the policy again</span><span class="w"></span>
+<span class="nt">rollout_steps</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2048</span><span class="w"></span>
+<span class="c1"># (O)   [float]   Factor to discount future rewards</span><span class="w"></span>
+<span class="nt">gamma</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.99</span><span class="w"></span>
+<span class="c1"># (O)   [int]     Number of epochs the network gets fed with the whole rollout data, when training is triggered</span><span class="w"></span>
+<span class="nt">n_epochs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span><span class="w"></span>
+<span class="c1"># (O)   [int]     Batch size into which the rollout data gets split</span><span class="w"></span>
+<span class="nt">batch_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">256</span><span class="w"></span>
+<span class="c1"># (O)   [float]   Range of the acceptable deviation between the policy before and after training</span><span class="w"></span>
+<span class="nt">clip_range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.2</span><span class="w"></span>
+<span class="c1"># (O)   [float]   Entropy loss coefficient for the total loss calculation</span><span class="w"></span>
+<span class="nt">ent_coef</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w"></span>
+<span class="c1"># (O)   [float]   Learning rate for the network updates</span><span class="w"></span>
+<span class="nt">learning_rate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.002</span><span class="w"></span>
+<span class="c1"># (O) List[int] List with dimension for the hidden layers (length of list = number of hidden layers) used in the policy net</span><span class="w"></span>
+<span class="nt">policy_layer</span><span class="p">:</span><span class="w">  </span><span class="p p-Indicator">[</span><span class="w"> </span><span class="nv">256</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">256</span><span class="w"> </span><span class="p p-Indicator">]</span><span class="w"></span>
+<span class="c1"># (O) [str] String for the activation function of the policy net</span><span class="w"></span>
+<span class="w">            </span><span class="c1"># Note, the activation function has to be from the torch.nn module (e.g. ReLU)</span><span class="w"></span>
+<span class="nt">policy_activation</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;ReLU&#39;</span><span class="w"></span>
+<span class="c1"># (O) List[int] List with dimension for the hidden layers (length of list = number of hidden layers) used in the value net</span><span class="w"></span>
+<span class="nt">value_layer</span><span class="p">:</span><span class="w">  </span><span class="p p-Indicator">[</span><span class="w"> </span><span class="nv">256</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">256</span><span class="w"> </span><span class="p p-Indicator">]</span><span class="w"></span>
+<span class="c1"># (O) [str] String for the activation function of the value net</span><span class="w"></span>
+<span class="w">            </span><span class="c1"># Note, the activation function has to be from the torch.nn module (e.g. ReLU)</span><span class="w"></span>
+<span class="nt">value_activation</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;ReLU&#39;</span><span class="w"></span>
+<span class="c1"># (R)   [int]     Maximum number of instances shown to the agent. Limits the training process. Note that instances may be</span><span class="w"></span>
+<span class="w">                  </span><span class="c1"># multiple times, if total_instances is larger than the number of generated instances</span><span class="w"></span>
+<span class="c1"># (R) [int] Maximum number of instances shown to the agent. Limits the training process</span><span class="w"></span>
+<span class="nt">total_instances</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10_000</span><span class="w"></span>
+<span class="c1"># (R)   [int]     Maximum number of steps that the agent can interact with the env. Limits the training process</span><span class="w"></span>
+<span class="nt">total_timesteps</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1_000_000</span><span class="w"></span>
+<span class="c1"># (R)   [float]   Range between 0 and 1. How much (percentually) of the generated data will be used for training.</span><span class="w"></span>
+<span class="nt">train_test_split</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.8</span><span class="w"></span>
+<span class="c1"># (R)   [float]   Range between 0 and 1. How much (percentually) of the remaining data (1-train_test_split) will be</span><span class="w"></span>
+<span class="w">                  </span><span class="c1"># used for training.</span><span class="w"></span>
+<span class="nt">test_validation_split</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.8</span><span class="w"></span>
+<span class="c1"># (R)   [int]     Number of environment step calls between intermediate (validation) tests</span><span class="w"></span>
+<span class="nt">intermediate_test_interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30_000</span><span class="w"></span>
+
+<span class="c1"># --- env (Environment) parameter ---</span><span class="w"></span>
+<span class="c1"># (R)   [str]     Environment you want to use. The vanilla case is env_tetris_scheduling.</span><span class="w"></span>
+<span class="nt">environment</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">env_tetris_scheduling</span><span class="w"></span>
+<span class="c1"># (O)   [int]     Maximum number of steps the agent can take before the env interrupts the episode.</span><span class="w"></span>
+<span class="w">                  </span><span class="c1"># Should be greater than the minimum number of agent actions required to solve the problem.</span><span class="w"></span>
+<span class="w">                  </span><span class="c1"># Can be larger that the minimum number of agent actions, if e.g. invalid actions or skip actions are</span><span class="w"></span>
+<span class="w">                  </span><span class="c1"># implemented</span><span class="w"></span>
+<span class="nt">num_steps_max</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">90</span><span class="w"></span>
+<span class="c1"># (O)   [int]     After this number of episodes, the env prints the last episode result in the console</span><span class="w"></span>
+<span class="nt">log_interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span><span class="w"></span>
+<span class="c1"># (O)   [bool]    All initial task instances are shuffled before being returned to the agent as observation</span><span class="w"></span>
+<span class="nt">shuffle</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span><span class="w"></span>
+<span class="c1"># (O)   [str]     The reward strategy determines, how the reward is computed. Default is &#39;dense_makespan_reward&#39;</span><span class="w"></span>
+<span class="nt">reward_strategy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dense_makespan_reward</span><span class="w"></span>
+<span class="c1"># (O)   [int]     The reward scale is a float by which the reward is multiplied to increase/decrease the reward signal</span><span class="w"></span>
+<span class="w">                  </span><span class="c1"># strength</span><span class="w"></span>
+<span class="nt">reward_scale</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"></span>
+
+<span class="c1"># --- benchmarking</span><span class="w"></span>
+<span class="c1"># (R)   List[str] List of all heuristics and algorithms against which to benchmark</span><span class="w"></span>
+<span class="nt">test_heuristics</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;rand&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;EDD&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;SPT&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;MTR&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;LTR&#39;</span><span class="p p-Indicator">]</span><span class="w"></span>
+<span class="c1"># (O)   [str]     Metric name in the final evaluation table which summarizes the training success best. See</span><span class="w"></span>
+<span class="w">                  </span><span class="c1"># EvaluationHandler.evaluate_test() in utils.evaluations for suitable metrics or add one.</span><span class="w"></span>
+<span class="w">                  </span><span class="c1"># In a wandb hyperparameter sweep this will be usable as objective metric.</span><span class="w"></span>
+<span class="nt">success_metric</span><span class="p">:</span><span class="w">   </span><span class="l l-Scalar l-Scalar-Plain">makespan_mean</span><span class="w"></span>
+</pre></div>
+</div>
+<p><em>config_job6_task6_tools0.yaml</em> should look like this:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1">##############################################################################</span><span class="w"></span>
+<span class="c1">###                         Training                                       ###</span><span class="w"></span>
+<span class="c1">##############################################################################</span><span class="w"></span>
+
+<span class="c1"># (R)   [String]  RL algorithm you want to use - This template is for PPO</span><span class="w"></span>
+<span class="nt">algorithm</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ppo_masked</span><span class="w"></span>
+<span class="c1"># (R)   [string]  Path to the file with generated data that to be used for training</span><span class="w"></span>
+<span class="nt">instances_file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">jssp/config_job6_task6_tools0.pkl</span><span class="w"></span>
+<span class="c1"># (O)   [string]  The finished model is saved under this name. Alternatively set to &lt;automatic&gt;, then it will be</span><span class="w"></span>
+<span class="w">                  </span><span class="c1"># replaced with the current DayMonthYearHourMinute</span><span class="w"></span>
+<span class="nt">saved_model_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example_ppo_masked_agent</span><span class="w"></span>
+<span class="c1"># (R)   [int]     Seed for all pseudo random generators (random, numpy, torch)</span><span class="w"></span>
+<span class="nt">seed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span><span class="w"></span>
+<span class="c1"># (O)   [bool]    Bool, if the train-test-split of instances should remain the same (1111) and be independent of the</span><span class="w"></span>
+<span class="w">                  </span><span class="c1"># random seed. This is useful for hyperparameter-sweeps with multiple random seeds to keep the same</span><span class="w"></span>
+<span class="w">                  </span><span class="c1"># test instances for comparability. Irrelevant, if the random seed across runs remains the same.</span><span class="w"></span>
+<span class="nt">overwrite_split_seed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span><span class="w"></span>
+<span class="c1"># (R)   [string]  Set an individual description that you can identify this training run  more easily later on.</span><span class="w"></span>
+<span class="w">                  </span><span class="c1"># This will be used in &quot;weights and biases&quot; as well</span><span class="w"></span>
+<span class="nt">config_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tasks_6x6</span><span class="w"></span>
+<span class="c1"># (O)   [string]  Set a directory where you want to save the agent model</span><span class="w"></span>
+<span class="nt">experiment_save_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">models</span><span class="w"></span>
+<span class="c1"># (O)   [int]:    Wandb mode choose: choose from [0: no wandb, 1: wandb_offline, 2: wandb_online]</span><span class="w"></span>
+<span class="nt">wandb_mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span><span class="w"></span>
+<span class="c1"># (O)   [string]  Set a wandb project where you want to upload all wandb logs</span><span class="w"></span>
+<span class="nt">wandb_project</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ppo_tutorial_test</span><span class="w"></span>
+
+<span class="c1"># --- PPO parameter ---</span><span class="w"></span>
+<span class="c1"># (O)   [int]     Number of steps collected before PPO updates the policy again</span><span class="w"></span>
+<span class="nt">rollout_steps</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2048</span><span class="w"></span>
+<span class="c1"># (O)   [float]   Factor to discount future rewards</span><span class="w"></span>
+<span class="nt">gamma</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.99</span><span class="w"></span>
+<span class="c1"># (O)   [int]     Number of epochs the network gets fed with the whole rollout data, when training is triggered</span><span class="w"></span>
+<span class="nt">n_epochs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span><span class="w"></span>
+<span class="c1"># (O)   [int]     Batch size into which the rollout data gets split</span><span class="w"></span>
+<span class="nt">batch_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">256</span><span class="w"></span>
+<span class="c1"># (O)   [float]   Range of the acceptable deviation between the policy before and after training</span><span class="w"></span>
+<span class="nt">clip_range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.2</span><span class="w"></span>
+<span class="c1"># (O)   [float]   Entropy loss coefficient for the total loss calculation</span><span class="w"></span>
+<span class="nt">ent_coef</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w"></span>
+<span class="c1"># (O)   [float]   Learning rate for the network updates</span><span class="w"></span>
+<span class="nt">learning_rate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.002</span><span class="w"></span>
+<span class="c1"># (O) List[int] List with dimension for the hidden layers (length of list = number of hidden layers) used in the policy net</span><span class="w"></span>
+<span class="nt">policy_layer</span><span class="p">:</span><span class="w">  </span><span class="p p-Indicator">[</span><span class="w"> </span><span class="nv">256</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">256</span><span class="w"> </span><span class="p p-Indicator">]</span><span class="w"></span>
+<span class="c1"># (O) [str] String for the activation function of the policy net</span><span class="w"></span>
+<span class="w">            </span><span class="c1"># Note, the activation function has to be from the torch.nn module (e.g. ReLU)</span><span class="w"></span>
+<span class="nt">policy_activation</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;ReLU&#39;</span><span class="w"></span>
+<span class="c1"># (O) List[int] List with dimension for the hidden layers (length of list = number of hidden layers) used in the value net</span><span class="w"></span>
+<span class="nt">value_layer</span><span class="p">:</span><span class="w">  </span><span class="p p-Indicator">[</span><span class="w"> </span><span class="nv">256</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">256</span><span class="w"> </span><span class="p p-Indicator">]</span><span class="w"></span>
+<span class="c1"># (O) [str] String for the activation function of the value net</span><span class="w"></span>
+<span class="w">            </span><span class="c1"># Note, the activation function has to be from the torch.nn module (e.g. ReLU)</span><span class="w"></span>
+<span class="nt">value_activation</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;ReLU&#39;</span><span class="w"></span>
+<span class="c1"># (R)   [int]     Maximum number of instances shown to the agent. Limits the training process. Note that instances may be</span><span class="w"></span>
+<span class="w">                  </span><span class="c1"># multiple times, if total_instances is larger than the number of generated instances</span><span class="w"></span>
+<span class="c1"># (R) [int] Maximum number of instances shown to the agent. Limits the training process</span><span class="w"></span>
+<span class="nt">total_instances</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10_000</span><span class="w"></span>
+<span class="c1"># (R)   [int]     Maximum number of steps that the agent can interact with the env. Limits the training process</span><span class="w"></span>
+<span class="nt">total_timesteps</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1_000_000</span><span class="w"></span>
+<span class="c1"># (R)   [float]   Range between 0 and 1. How much (percentually) of the generated data will be used for training.</span><span class="w"></span>
+<span class="nt">train_test_split</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.8</span><span class="w"></span>
+<span class="c1"># (R)   [float]   Range between 0 and 1. How much (percentually) of the remaining data (1-train_test_split) will be</span><span class="w"></span>
+<span class="w">                  </span><span class="c1"># used for training.</span><span class="w"></span>
+<span class="nt">test_validation_split</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.8</span><span class="w"></span>
+<span class="c1"># (R)   [int]     Number of environment step calls between intermediate (validation) tests</span><span class="w"></span>
+<span class="nt">intermediate_test_interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30_000</span><span class="w"></span>
+
+<span class="c1"># --- env (Environment) parameter ---</span><span class="w"></span>
+<span class="c1"># (R)   [str]     Environment you want to use. The vanilla case is env_tetris_scheduling.</span><span class="w"></span>
+<span class="nt">environment</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">env_tetris_scheduling</span><span class="w"></span>
+<span class="c1"># (O)   [int]     Maximum number of steps the agent can take before the env interrupts the episode.</span><span class="w"></span>
+<span class="w">                  </span><span class="c1"># Should be greater than the minimum number of agent actions required to solve the problem.</span><span class="w"></span>
+<span class="w">                  </span><span class="c1"># Can be larger that the minimum number of agent actions, if e.g. invalid actions or skip actions are</span><span class="w"></span>
+<span class="w">                  </span><span class="c1"># implemented</span><span class="w"></span>
+<span class="nt">num_steps_max</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">90</span><span class="w"></span>
+<span class="c1"># (O)   [int]     After this number of episodes, the env prints the last episode result in the console</span><span class="w"></span>
+<span class="nt">log_interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span><span class="w"></span>
+<span class="c1"># (O)   [bool]    All initial task instances are shuffled before being returned to the agent as observation</span><span class="w"></span>
+<span class="nt">shuffle</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span><span class="w"></span>
+<span class="c1"># (O)   [str]     The reward strategy determines, how the reward is computed. Default is &#39;dense_makespan_reward&#39;</span><span class="w"></span>
+<span class="nt">reward_strategy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sparse_makespan_reward</span><span class="w"></span>
+<span class="c1"># (O)   [int]     The reward scale is a float by which the reward is multiplied to increase/decrease the reward signal</span><span class="w"></span>
+<span class="w">                  </span><span class="c1"># strength</span><span class="w"></span>
+<span class="nt">reward_scale</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"></span>
+
+<span class="c1"># --- benchmarking</span><span class="w"></span>
+<span class="c1"># (R)   List[str] List of all heuristics and algorithms against which to benchmark</span><span class="w"></span>
+<span class="nt">test_heuristics</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;rand&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;EDD&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;SPT&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;MTR&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;LTR&#39;</span><span class="p p-Indicator">]</span><span class="w"></span>
+<span class="c1"># (O)   [str]     Metric name in the final evaluation table which summarizes the training success best. See</span><span class="w"></span>
+<span class="w">                  </span><span class="c1"># EvaluationHandler.evaluate_test() in utils.evaluations for suitable metrics or add one.</span><span class="w"></span>
+<span class="w">                  </span><span class="c1"># In a wandb hyperparameter sweep this will be usable as objective metric.</span><span class="w"></span>
+<span class="nt">success_metric</span><span class="p">:</span><span class="w">   </span><span class="l l-Scalar l-Scalar-Plain">makespan_mean</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Note that the only changes had to be made to the file names and reward_strategy parameters.</p>
+<p>Now all that is left is to log into Weights and Biases and start training. This will take some time, but you can follow
+the progress in the console log and in the Weights and Biases dashboard.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wandb login
+python -m src.agents.test -fp training/jssp/config_job3_task4_tools3.yaml
+python -m src.agents.test -fp training/jssp/config_job6_task6_tools0.yaml
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="tutorials.html" class="btn btn-neutral float-left" title="Tutorials" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="looping_over_config_params.html" class="btn btn-neutral float-right" title="Looping over Configuration Parameters" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, AlphaMES-Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

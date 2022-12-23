@@ -1,0 +1,15 @@
+
+[
+  {
+    "param1": "intermediate_test_interval",
+    "param2": "total_timesteps",
+    "op":"le",
+    "err_mess": "intermediate_test_intervall is greater than total_timesteps. That means no intermediate will be executed"
+  },
+  {
+    "param1": "log_interval",
+    "param2": "total_instances",
+    "op":"le",
+    "err_mess": "log_interval is greater than total_instances. That means no environment logging will be executed"
+  }
+]

@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Environments &mdash; Schlably 0.0.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Visuals Generator" href="visuals_generator.html" />
+    <link rel="prev" title="Reinforcement Learning Agents" href="agents.reinforcement_learning.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Schlably
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Table of Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="api.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="agents.reinforcement_learning.html">Reinforcement Learning Agents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="agents.reinforcement_learning.html#reinforcement-learning-functions">Reinforcement Learning Functions</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Environments</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-environments.env_tetris_scheduling">Tetris_scheduling Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-environments.env_tetris_scheduling_indirect_action">Tetris_scheduling_indirect_action Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-environments.environment_loader">Util Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="visuals_generator.html">Visuals Generator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_generator.html">Data Generator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="solvers.html">Solvers</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Schlably</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="api.html">API Reference</a> &raquo;</li>
+      <li>Environments</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/environments.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="environments">
+<h1>Environments<a class="headerlink" href="#environments" title="Permalink to this heading"></a></h1>
+<p>Environments are the core of any DRL project since they specify the “game” and interaction logic</p>
+<section id="module-environments.env_tetris_scheduling">
+<span id="tetris-scheduling-environment"></span><h2>Tetris_scheduling Environment<a class="headerlink" href="#module-environments.env_tetris_scheduling" title="Permalink to this heading"></a></h2>
+<p>This file provides the scheduling environment class Env,
+which can be used to load and simulate scheduling-problem instances.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="environments.env_tetris_scheduling.Env">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">environments.env_tetris_scheduling.</span></span><span class="sig-name descname"><span class="pre">Env</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Task</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#environments.env_tetris_scheduling.Env" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Env</span></code></p>
+<p>Environment for scheduling optimization.
+This class inherits from the base gym environment, so the functions step, reset, _state_obs and render
+are implemented and can be used by default.</p>
+<p>If you want to customize the given rewards, you can adapt the function compute_reward.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config</strong> – Dictionary with parameters to specify environment attributes</p></li>
+<li><p><strong>data</strong> – Scheduling problem to be solved, so a list of instances</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="environments.env_tetris_scheduling.Env.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Task</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#environments.env_tetris_scheduling.Env.__init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="environments.env_tetris_scheduling.Env.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#environments.env_tetris_scheduling.Env.reset" title="Permalink to this definition"></a></dt>
+<dd><ul class="simple">
+<li><p>Resets the episode information trackers</p></li>
+<li><p>Updates the number of runs</p></li>
+<li><p>Loads new instance</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>First observation by calling the class function self.state_obs</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="environments.env_tetris_scheduling.Env.step">
+<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">action:</span> <span class="pre">~typing.Union[int,</span> <span class="pre">float],</span> <span class="pre">**kwargs)</span> <span class="pre">-&gt;</span> <span class="pre">(typing.List[float],</span> <span class="pre">typing.Any,</span> <span class="pre">&lt;class</span> <span class="pre">'bool'&gt;,</span> <span class="pre">typing.Dict</span></em><span class="sig-paren">)</span><a class="headerlink" href="#environments.env_tetris_scheduling.Env.step" title="Permalink to this definition"></a></dt>
+<dd><p>Step Function
+:param action: Action to be performed on the current state of the environment
+:return: Observation, reward, done, infos</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="environments.env_tetris_scheduling.Env.get_instance_info">
+<span class="sig-name descname"><span class="pre">get_instance_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">)</span> <span class="pre">-&gt;</span> <span class="pre">(&lt;class</span> <span class="pre">'int'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">&lt;class</span> <span class="pre">'int'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">&lt;class</span> <span class="pre">'int'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">&lt;class</span> <span class="pre">'int'&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#environments.env_tetris_scheduling.Env.get_instance_info" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieves info about the instance size and configuration from an instance sample
+:return: (number of jobs, number of tasks and the maximum runtime) of this datapoint</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="environments.env_tetris_scheduling.Env.state_obs">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">state_obs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#environments.env_tetris_scheduling.Env.state_obs" title="Permalink to this definition"></a></dt>
+<dd><p>Transforms state (task state and factory state) to gym obs
+Scales the values between 0-1 and transforms to onehot encoding</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Observation</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="environments.env_tetris_scheduling.Env.to_one_hot">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">to_one_hot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">array</span></span></span><a class="headerlink" href="#environments.env_tetris_scheduling.Env.to_one_hot" title="Permalink to this definition"></a></dt>
+<dd><p>Convert to One Hot encoding</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> – Index which value should be 1</p></li>
+<li><p><strong>max_size</strong> – Size of the one hot encoding vector</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>One hot encoded vector</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="environments.env_tetris_scheduling.Env.check_valid_job_action">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check_valid_job_action</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job_action</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">job_mask</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#environments.env_tetris_scheduling.Env.check_valid_job_action" title="Permalink to this definition"></a></dt>
+<dd><p>Check if job action is valid</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>job_action</strong> – Job action as one hot vector</p></li>
+<li><p><strong>job_mask</strong> – One hot vector with ones for each valid job</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if job_action is valid, else False</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="environments.env_tetris_scheduling.Env.get_selected_task">
+<span class="sig-name descname"><span class="pre">get_selected_task</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job_idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Task</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#environments.env_tetris_scheduling.Env.get_selected_task" title="Permalink to this definition"></a></dt>
+<dd><p>Helper Function to get the selected task (next possible task) only by the job index</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>job_idx</strong> – job index</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Index of the task in the task list and the selected task</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="environments.env_tetris_scheduling.Env.choose_machine">
+<span class="sig-name descname"><span class="pre">choose_machine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Task</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#environments.env_tetris_scheduling.Env.choose_machine" title="Permalink to this definition"></a></dt>
+<dd><p>This function performs the logic, with which the machine is chosen (in the case of the flexible JSSP)
+Implemented at the moment: Choose the machine out of the set of possible machines with the earliest possible
+start time</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>task</strong> – Task</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Machine on which the task will be scheduled.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="environments.env_tetris_scheduling.Env.get_action_mask">
+<span class="sig-name descname"><span class="pre">get_action_mask</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">array</span></span></span><a class="headerlink" href="#environments.env_tetris_scheduling.Env.get_action_mask" title="Permalink to this definition"></a></dt>
+<dd><p>Get Action mask
+It is needed for the heuristics, the machine selection (and the agent, if it is masked).
+0 -&gt; available
+1 -&gt; not available</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Action mask</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="environments.env_tetris_scheduling.Env.execute_action">
+<span class="sig-name descname"><span class="pre">execute_action</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Task</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">machine_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#environments.env_tetris_scheduling.Env.execute_action" title="Permalink to this definition"></a></dt>
+<dd><p>This Function executes a valid action
+- set machine
+- update job and task</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>job_id</strong> – job_id of the task to be executed</p></li>
+<li><p><strong>task</strong> – Task</p></li>
+<li><p><strong>machine_id</strong> – ID of the machine on which the task is to be executed</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="environments.env_tetris_scheduling.Env.compute_reward">
+<span class="sig-name descname"><span class="pre">compute_reward</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#environments.env_tetris_scheduling.Env.compute_reward" title="Permalink to this definition"></a></dt>
+<dd><p>Calculates the reward that will later be returned to the agent. Uses the self.reward_strategy string to
+discriminate between different reward strategies. Default is ‘dense_reward’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Reward</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="environments.env_tetris_scheduling.Env.sparse_makespan_reward">
+<span class="sig-name descname"><span class="pre">sparse_makespan_reward</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#environments.env_tetris_scheduling.Env.sparse_makespan_reward" title="Permalink to this definition"></a></dt>
+<dd><p>Computes the reward based on the final makespan at the end of the episode. Else 0.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>(int) sparse reward</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="environments.env_tetris_scheduling.Env.mr2_reward">
+<span class="sig-name descname"><span class="pre">mr2_reward</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#environments.env_tetris_scheduling.Env.mr2_reward" title="Permalink to this definition"></a></dt>
+<dd><p>Computes mr2 reward based on <a class="reference external" href="https://doi.org/10.1016/j.engappai.2022.104868">https://doi.org/10.1016/j.engappai.2022.104868</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>mr2 reward</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="environments.env_tetris_scheduling.Env.check_done">
+<span class="sig-name descname"><span class="pre">check_done</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#environments.env_tetris_scheduling.Env.check_done" title="Permalink to this definition"></a></dt>
+<dd><p>Check if all jobs are done</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>True if all jobs are done, else False</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="environments.env_tetris_scheduling.Env.calculate_tardiness">
+<span class="sig-name descname"><span class="pre">calculate_tardiness</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#environments.env_tetris_scheduling.Env.calculate_tardiness" title="Permalink to this definition"></a></dt>
+<dd><p>Calculates the tardiness of all jobs
+(this is the previous was the calc reward function)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>(int) tardiness of last solution</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="environments.env_tetris_scheduling.Env.get_makespan">
+<span class="sig-name descname"><span class="pre">get_makespan</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#environments.env_tetris_scheduling.Env.get_makespan" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the current makespan (the time the latest of all scheduled tasks finishes)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="environments.env_tetris_scheduling.Env.log_intermediate_step">
+<span class="sig-name descname"><span class="pre">log_intermediate_step</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#environments.env_tetris_scheduling.Env.log_intermediate_step" title="Permalink to this definition"></a></dt>
+<dd><p>Log Function</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="environments.env_tetris_scheduling.Env.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#environments.env_tetris_scheduling.Env.close" title="Permalink to this definition"></a></dt>
+<dd><p>This is a relict of using OpenAI Gym API. This is currently unnecessary.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="environments.env_tetris_scheduling.Env.seed">
+<span class="sig-name descname"><span class="pre">seed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#environments.env_tetris_scheduling.Env.seed" title="Permalink to this definition"></a></dt>
+<dd><p>This is a relict of using OpenAI Gym API.
+Currently unnecessary, because the environment is deterministic -&gt; no seed is used.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="environments.env_tetris_scheduling.Env.render">
+<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'human'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#environments.env_tetris_scheduling.Env.render" title="Permalink to this definition"></a></dt>
+<dd><p>Visualizes the current status of the environment</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>mode</strong> – “human”: Displays the gantt chart,
+“image”: Returns an image of the gantt chart</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>PIL.Image.Image if mode=image, else None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-environments.env_tetris_scheduling_indirect_action">
+<span id="tetris-scheduling-indirect-action-environment"></span><h2>Tetris_scheduling_indirect_action Environment<a class="headerlink" href="#module-environments.env_tetris_scheduling_indirect_action" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="environments.env_tetris_scheduling_indirect_action.IndirectActionEnv">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">environments.env_tetris_scheduling_indirect_action.</span></span><span class="sig-name descname"><span class="pre">IndirectActionEnv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Task</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#environments.env_tetris_scheduling_indirect_action.IndirectActionEnv" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Env</span></code></p>
+<p>Scheduling environment for scheduling optimization according to
+<a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S0952197622001130">https://www.sciencedirect.com/science/article/pii/S0952197622001130</a>.</p>
+<p>Main differences to the vanilla environment:</p>
+<ul class="simple">
+<li><p>ACTION: Indirect action mapping</p></li>
+<li><p>REWARD: m-r2 reward (which means we have to train on the same data again and again)</p></li>
+<li><p>OBSERVATION: observation different (“normalization” looks like division by max to [0, 1] in paper code). Not every
+part makes sense, due to the different interaction logic</p></li>
+<li><p>INTERACTION LOGIC WARNING:</p></li>
+<li><p>original paper: time steps are run through, the agent can take as many actions as it wants per time-step,
+but may not schedule into the past.</p></li>
+<li><p>our adaptation: we still play tetris, meaning that we schedule whole blocks of work at a time</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config</strong> – Dictionary with parameters to specify environment attributes</p></li>
+<li><p><strong>data</strong> – Scheduling problem to be solved, so a list of instances</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="environments.env_tetris_scheduling_indirect_action.IndirectActionEnv.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Task</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#environments.env_tetris_scheduling_indirect_action.IndirectActionEnv.__init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="environments.env_tetris_scheduling_indirect_action.IndirectActionEnv.step">
+<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#environments.env_tetris_scheduling_indirect_action.IndirectActionEnv.step" title="Permalink to this definition"></a></dt>
+<dd><p>Step Function</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>action</strong> – Action to be performed on the current state of the environment</p></li>
+<li><p><strong>kwargs</strong> – should include “action_mode”, because the interaction pattern between heuristics and
+the agent are different and need to be processed differently</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Observation, reward, done, infos</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="environments.env_tetris_scheduling_indirect_action.IndirectActionEnv.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#environments.env_tetris_scheduling_indirect_action.IndirectActionEnv.reset" title="Permalink to this definition"></a></dt>
+<dd><ul class="simple">
+<li><p>Resets the episode information trackers</p></li>
+<li><p>Updates the number of runs</p></li>
+<li><p>Loads new instance</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>First observation by calling the class function self.state_obs</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="environments.env_tetris_scheduling_indirect_action.IndirectActionEnv.state_obs">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">state_obs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span></em><a class="headerlink" href="#environments.env_tetris_scheduling_indirect_action.IndirectActionEnv.state_obs" title="Permalink to this definition"></a></dt>
+<dd><p>Transforms state (task state and factory state) to gym obs
+Scales the values between 0-1 and transforms to onehot encoding
+Confer <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S0952197622001130">https://www.sciencedirect.com/science/article/pii/S0952197622001130</a> section 4.2.1</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Observation</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="environments.env_tetris_scheduling_indirect_action.IndirectActionEnv.get_action_mask">
+<span class="sig-name descname"><span class="pre">get_action_mask</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">array</span></span></span><a class="headerlink" href="#environments.env_tetris_scheduling_indirect_action.IndirectActionEnv.get_action_mask" title="Permalink to this definition"></a></dt>
+<dd><p>Get Action mask
+In this environment, we always treat all actions as valid, because the interaction logic accepts it. Note that
+we only allow non-masked algorithms.
+The heuristics, however, still need the job mask.
+0 -&gt; available
+1 -&gt; not available</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Action mask</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="environments.env_tetris_scheduling_indirect_action.IndirectActionEnv.get_next_tasks">
+<span class="sig-name descname"><span class="pre">get_next_tasks</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#environments.env_tetris_scheduling_indirect_action.IndirectActionEnv.get_next_tasks" title="Permalink to this definition"></a></dt>
+<dd><p>returns the next tasks that can be scheduled</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-environments.environment_loader">
+<span id="util-functions"></span><h2>Util Functions<a class="headerlink" href="#module-environments.environment_loader" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="environments.environment_loader.EnvironmentLoader">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">environments.environment_loader.</span></span><span class="sig-name descname"><span class="pre">EnvironmentLoader</span></span><a class="headerlink" href="#environments.environment_loader.EnvironmentLoader" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Loads the right environment as named in the passed config file.
+Also checks if the environment is compatible with the chosen algorithm.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="environments.environment_loader.EnvironmentLoader.load">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_env_agent_compatibility</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">register_gym_env</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#environments.environment_loader.EnvironmentLoader.load" title="Permalink to this definition"></a></dt>
+<dd><p>loading function</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="environments.environment_loader.EnvironmentLoader.check_environment_agent_compatibility">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check_environment_agent_compatibility</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algo_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#environments.environment_loader.EnvironmentLoader.check_environment_agent_compatibility" title="Permalink to this definition"></a></dt>
+<dd><p>Check if environment and algorithm are compatible. E.g., some environments may depend on action masking.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="agents.reinforcement_learning.html" class="btn btn-neutral float-left" title="Reinforcement Learning Agents" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="visuals_generator.html" class="btn btn-neutral float-right" title="Visuals Generator" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, AlphaMES-Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

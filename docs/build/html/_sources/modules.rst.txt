@@ -1,0 +1,12 @@
+src
+===
+
+.. toctree::
+   :maxdepth: 4
+
+   agents
+   data_generator
+   environments
+   init
+   utils
+   visuals_generator

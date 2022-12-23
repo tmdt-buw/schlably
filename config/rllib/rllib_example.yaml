@@ -1,0 +1,26 @@
+##############################################################################
+###                            RLlib                                       ###
+##############################################################################
+
+# --- Data parameter ---
+# (R)   [string]  Path to the file with generated data that to be used for training
+instances_file: jssp/config_job3_task4_tools0.pkl
+
+# --- Environment parameter ---
+# (R)   [str]     Environment you want to use. The vanilla case is env_tetris_scheduling.
+environment: env_tetris_scheduling_indirect_action
+
+# --- RLlib parameter ---
+rllib: {
+  "env": "env_tetris_scheduling_indirect_action",
+  "disable_env_checking": False,
+  "framework": "torch",
+  "num_workers": 2,
+  "num_envs_per_worker": 1,
+  "batch_mode": "complete_episodes",
+  "model": {
+    "fcnet_hiddens": [ 32, 32 ],
+    "fcnet_activation": "relu",
+  },
+  "horizon": 100000,
+}

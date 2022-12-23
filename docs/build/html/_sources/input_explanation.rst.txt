@@ -1,0 +1,7 @@
+input\_explanation module
+=========================
+
+.. automodule:: input_explanation
+   :members:
+   :undoc-members:
+   :show-inheritance:

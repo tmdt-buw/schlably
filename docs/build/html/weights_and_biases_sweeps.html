@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weights &amp; Biases sweeps &mdash; Schlably 0.0.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="API Reference" href="api.html" />
+    <link rel="prev" title="Looping over Configuration Parameters" href="looping_over_config_params.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Schlably
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Table of Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="tutorials.html">Tutorials</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="custom_problem_setting.html">Custom Problem Settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="looping_over_config_params.html">Looping over Configuration Parameters</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Weights &amp; Biases sweeps</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Schlably</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="tutorials.html">Tutorials</a> &raquo;</li>
+      <li>Weights &amp; Biases sweeps</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/weights_and_biases_sweeps.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="weights-biases-sweeps">
+<h1>Weights &amp; Biases sweeps<a class="headerlink" href="#weights-biases-sweeps" title="Permalink to this heading"></a></h1>
+<p>Weights &amp; Biases (wandb) is a tool for tracking and visualizing machine learning experiments.
+It’s free for open source projects and has a free tier for commercial projects.
+It’s a great tool for tracking experiments, visualizing results, and sharing results with collaborators.</p>
+<p>If you want to use wandb for hyperparameter sweeps, simply follow these instructions:</p>
+<ol class="arabic">
+<li><p>Edit <em>config/sweep/config_sweep_ppo.yaml</em> or create an own sweep config.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://colab.research.google.com/github/wandb/examples/blob/master/colabs/pytorch/Organizing_Hyperparameter_Sweeps_in_PyTorch_with_W%26B.ipynb">Here</a> you can find instructions for creating a configuration.</p></li>
+<li><p>Make sure that you point to the right training config in your sweep config file.</p></li>
+<li><p>In the training config which you are using as the basis for the sweep, make sure to track the right success metric. You find it under “benchmarking” along with instructions.</p></li>
+</ul>
+</li>
+<li><p>Run</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wandb sweep -e your_entity -p your_project config/sweep/config_sweep_ppo.yaml to create a wandb sweep.
+</pre></div>
+</div>
+</li>
+<li><p>Run</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wandb agent your_entity/your_project/sweep_name to start the sweep
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="looping_over_config_params.html" class="btn btn-neutral float-left" title="Looping over Configuration Parameters" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="api.html" class="btn btn-neutral float-right" title="API Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, AlphaMES-Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

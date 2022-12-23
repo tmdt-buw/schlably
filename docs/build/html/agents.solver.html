@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Exact solver &mdash; Schlably 0.0.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Heuristics" href="agents.heuristic.html" />
+    <link rel="prev" title="Solvers" href="solvers.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Schlably
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Table of Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="api.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="agents.reinforcement_learning.html">Reinforcement Learning Agents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="agents.reinforcement_learning.html#reinforcement-learning-functions">Reinforcement Learning Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environments.html">Environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="visuals_generator.html">Visuals Generator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_generator.html">Data Generator</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="solvers.html">Solvers</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Exact solver</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#module-agents.solver.solver">Solver</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="agents.heuristic.html">Heuristics</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Schlably</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="api.html">API Reference</a> &raquo;</li>
+          <li><a href="solvers.html">Solvers</a> &raquo;</li>
+      <li>Exact solver</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/agents.solver.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="exact-solver">
+<h1>Exact solver<a class="headerlink" href="#exact-solver" title="Permalink to this heading"></a></h1>
+<section id="module-agents.solver.solver">
+<span id="solver"></span><h2>Solver<a class="headerlink" href="#module-agents.solver.solver" title="Permalink to this heading"></a></h2>
+<p>This Solver solves certain scheduling problems optimally</p>
+<p>It can handle:</p>
+<ul class="simple">
+<li><p>Classic JSSP</p></li>
+<li><p>Classic FJSSP</p></li>
+<li><p>both of the above with and without tool constraints</p></li>
+<li><p>optimization criteria tardiness and makespan</p></li>
+</ul>
+<dl class="py class">
+<dt class="sig sig-object py" id="agents.solver.solver.OrToolSolver">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agents.solver.solver.</span></span><span class="sig-name descname"><span class="pre">OrToolSolver</span></span><a class="headerlink" href="#agents.solver.solver.OrToolSolver" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This class can be used to solve JSSP problems. It can handle:</p>
+<ul class="simple">
+<li><p>Classic JSSP</p></li>
+<li><p>Classic FJSSP</p></li>
+<li><p>both of the above with and without tool constraints</p></li>
+<li><p>optimization criteria tardiness and makespan</p></li>
+</ul>
+<p>Data needs to be passed in ‘instance format’ and is returned in this format, too.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="agents.solver.solver.OrToolSolver.optimize">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">optimize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Task</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">objective</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'makespan'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#agents.solver.solver.OrToolSolver.optimize" title="Permalink to this definition"></a></dt>
+<dd><p>Optimizes the passed instance according to the passed objective.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instance</strong> (<em>List</em><em>[</em><a class="reference internal" href="data_generator.html#data_generator.task.Task" title="data_generator.task.Task"><em>Task</em></a><em>]</em>) – The instance as a list of Tasks</p></li>
+<li><p><strong>objective</strong> (<em>str</em>) – Bbjective to be minimized. May be ‘makespan’ or ‘tardiness’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>tuple(list[Task], float) Solved instance and objective value</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agents.solver.solver.OrToolSolver.parse_instance_to_solver_format">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parse_instance_to_solver_format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Task</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#agents.solver.solver.OrToolSolver.parse_instance_to_solver_format" title="Permalink to this definition"></a></dt>
+<dd><p>Parses the instance to a processable format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>instance</strong> (<em>list</em><em>[</em><a class="reference internal" href="data_generator.html#data_generator.task.Task" title="data_generator.task.Task"><em>Task</em></a><em>]</em>) – The instance as a list of Tasks</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>jobs lists with Tuples for every task, including all necessary information for the solver function
+machine_id(s), processing_time, due_date(set to 0 for all but last task in job), tool</p>
+</dd>
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><p>Job2 = [([0, 2, 3], 8, 0, 4), ([0, 2, 3], 6, 0, 2), …]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agents.solver.solver.OrToolSolver.parse_to_plottable_format">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parse_to_plottable_format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">original_instance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Task</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assigned_jobs_by_solver</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#agents.solver.solver.OrToolSolver.parse_to_plottable_format" title="Permalink to this definition"></a></dt>
+<dd><p>Reformats the solution into the original instance format to be passed to the gantt chart generator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>original_instance</strong> (<em>list</em><em>[</em><em>Tasks</em><em>]</em>) – Original instance in original format</p></li>
+<li><p><strong>assigned_jobs_by_solver</strong> – solution passed by the optimize() function</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list[Tasks] plottable solved instance</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="agents.solver.solver.get_perser_args">
+<span class="sig-prename descclassname"><span class="pre">agents.solver.solver.</span></span><span class="sig-name descname"><span class="pre">get_perser_args</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#agents.solver.solver.get_perser_args" title="Permalink to this definition"></a></dt>
+<dd><p>parse arguments from command line</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="agents.solver.solver.main">
+<span class="sig-prename descclassname"><span class="pre">agents.solver.solver.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instances_data_file_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver_objective</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">write_to_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_gantt_chart</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#agents.solver.solver.main" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="solvers.html" class="btn btn-neutral float-left" title="Solvers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="agents.heuristic.html" class="btn btn-neutral float-right" title="Heuristics" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, AlphaMES-Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

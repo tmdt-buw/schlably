@@ -1,0 +1,29 @@
+utils package
+=============
+
+Submodules
+----------
+
+utils.evaluations module
+------------------------
+
+.. automodule:: utils.evaluations
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+utils.logger module
+-------------------
+
+.. automodule:: utils.logger
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: utils
+   :members:
+   :undoc-members:
+   :show-inheritance:

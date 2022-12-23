@@ -1,0 +1,3 @@
+.. automodule:: src.agents
+    :members:
+    :inherited-members:

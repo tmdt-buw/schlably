@@ -1,0 +1,31 @@
+##############################################################################
+###                               Testing                                  ###
+##############################################################################
+
+# (R)   [string]  RL algorithm you want to use - This template is for dqn
+algorithm: ppo_masked
+# (R)   [string]  Path to the file with generated data that to be used for training
+instances_file: jssp/config_job3_task4_tools0.pkl
+# (R)   [string]  Test Environment: Should be the same the agent was trained on
+                  # to stay consistent with action and observation spaces
+environment: env_tetris_scheduling
+# (O)   [str]     The reward strategy determines, how the reward is computed. Default is 'dense_makespan_reward'
+reward_strategy: dense_makespan_reward
+# (O)   [int]     The reward scale is a float by which the reward is multiplied to increase/decrease the reward signal
+                  # strength
+reward_scale: 1
+# (O)   [string]  Name of the model you want to load for testing
+saved_model_name: example_ppo_masked_agent
+# (R)   [int]     Seed for all pseudo random generators (random, numpy, torch)
+seed: 2
+# (R)   [string]  Set an individual description that you can identify this training run  more easily later on.
+# This will be used in "weights and biases" as well
+config_description: tasks_3x4
+# (O)   [string]  Set a directory from where you want to load the agent model
+experiment_save_path: models
+# (O)   [int]:    wandb mode choose: choose from [0: no wandb, 1: wandb_offline, 2: wandb_online]
+wandb_mode: 0
+# (O)   [string]  Set a wandb project where you want to upload all wandb logs
+wandb_project: project-1
+# (R)   List[str] List of all heuristics and algorithms against which to benchmark
+test_heuristics: ['rand', 'EDD', 'SPT', 'MTR', 'LTR']

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>utils package &mdash; Schlably 0.0.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Schlably
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Table of Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Schlably</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>utils package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/utils.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="utils-package">
+<h1>utils package<a class="headerlink" href="#utils-package" title="Permalink to this headline"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
+</section>
+<section id="module-utils.evaluations">
+<span id="utils-evaluations-module"></span><h2>utils.evaluations module<a class="headerlink" href="#module-utils.evaluations" title="Permalink to this headline"></a></h2>
+<p>This file provides the EvaluationHandler class, which supports the evaluation of a model testing.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="utils.evaluations.EvaluationHandler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">utils.evaluations.</span></span><span class="sig-name descname"><span class="pre">EvaluationHandler</span></span><a class="headerlink" href="#utils.evaluations.EvaluationHandler" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This class keeps track of several environment parameters (e.g. makespan, tardiness) during a model testing.
+After a testing, you can call the evaluate_test function
+to compute evaluation metrics across all collected test episodes (e.g. mean, standard deviation).</p>
+<p>You can adapt evaluate_test to compute different or more metrics.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.evaluations.EvaluationHandler.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.evaluations.EvaluationHandler.__init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.evaluations.EvaluationHandler.record_environment_episode">
+<span class="sig-name descname"><span class="pre">record_environment_episode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_reward</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#utils.evaluations.EvaluationHandler.record_environment_episode" title="Permalink to this definition"></a></dt>
+<dd><p>Stores all necessary environment parameters from the recent episode</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>env</strong> – Non reset environment object, whose parameters should be recorded</p></li>
+<li><p><strong>total_reward</strong> – Total reward of the episode</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.evaluations.EvaluationHandler.update_episode_solved_with_solver">
+<span class="sig-name descname"><span class="pre">update_episode_solved_with_solver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#utils.evaluations.EvaluationHandler.update_episode_solved_with_solver" title="Permalink to this definition"></a></dt>
+<dd><p>Calculates all missing parameters of an environment processed by the solver</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>env</strong> – Environment object with task attribute generated by the solver</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.evaluations.EvaluationHandler.evaluate_test">
+<span class="sig-name descname"><span class="pre">evaluate_test</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#utils.evaluations.EvaluationHandler.evaluate_test" title="Permalink to this definition"></a></dt>
+<dd><p>Gets all test_parameter and computes all relevant statistical data for plots and prints</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Dictionary with all specified evaluation metrics</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.evaluations.EvaluationHandler.add_solver_gap_to_results">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">add_solver_gap_to_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">results</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#utils.evaluations.EvaluationHandler.add_solver_gap_to_results" title="Permalink to this definition"></a></dt>
+<dd><p>If solver makespan exists, compute optimal gap for all agents</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>results</strong> – Dictionary with test results</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Updated dictionary with test results now including optimal gap</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-utils.logger">
+<span id="utils-logger-module"></span><h2>utils.logger module<a class="headerlink" href="#module-utils.logger" title="Permalink to this headline"></a></h2>
+<p>This file provides the Logger class. The logger is called during the whole training and testing process,
+to track the current status or results.</p>
+<p>Until now the logger only provides weights and biases (wandb) as logging method.
+You can add other logging methods and call them in the dump function to use existing logger infrastructure.
+If you want to use wandb, please follow the “Install” part of the README and refer the constants explanations below.</p>
+<p>Constants:</p>
+<div class="line-block">
+<div class="line">LOG_MODE: int: Wandb log mode. Choose from [0: no wandb, 1: wandb_offline, 2: wandb_online]</div>
+<div class="line">WANDB_PROJECT: str: Name of your wandb project where you want to upload all wandb logs</div>
+<div class="line">WANDB_ENTITY: str: Name of your wandb entity where you want to upload all wandb logs</div>
+<div class="line">WANDB_TABLE_COLUMNS list[str]: The logger uploads tables with testing results. This list is used to specify the columns
+names. If you change the content of the table, you can adapt the column labels</div>
+<div class="line">WANDB_FINAL_EVALUATION_TABLE_COLUMNS List[str]: The logger uploads the final evaluation results in a separate table
+with these columns.</div>
+</div>
+<p>LOG_MODE and WANDB_PROJECT can also be set in training config.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="utils.logger.Logger">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">utils.logger.</span></span><span class="sig-name descname"><span class="pre">Logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.logger.Logger" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This class can store various parameters (e.g. loss from a model update) as key value pairs.
+By calling the dump function, all stored parameters are logged according to the log_mode.
+Because the logger supports wandb there are several functions to initialize and handle the logging to wandb</p>
+<dl class="field-list simple">
+<dt class="field-odd">Param</dt>
+<dd class="field-odd"><p>config: Training config</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.logger.Logger.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.logger.Logger.__init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.logger.Logger.record">
+<span class="sig-name descname"><span class="pre">record</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logging_values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#utils.logger.Logger.record" title="Permalink to this definition"></a></dt>
+<dd><p>Stores all items of the input dictionary in the record_buffer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>logging_values</strong> – Dictionary with items to be logged</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.logger.Logger.clear_buffer">
+<span class="sig-name descname"><span class="pre">clear_buffer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#utils.logger.Logger.clear_buffer" title="Permalink to this definition"></a></dt>
+<dd><p>Empties the record_buffer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.logger.Logger.dump">
+<span class="sig-name descname"><span class="pre">dump</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#utils.logger.Logger.dump" title="Permalink to this definition"></a></dt>
+<dd><p>Logs all stored parameters according to the log_mode and clears the buffer afterwards</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.logger.Logger.dump_console">
+<span class="sig-name descname"><span class="pre">dump_console</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.logger.Logger.dump_console" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.logger.Logger.dump_wandb">
+<span class="sig-name descname"><span class="pre">dump_wandb</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#utils.logger.Logger.dump_wandb" title="Permalink to this definition"></a></dt>
+<dd><p>Logs all stored parameters to wandb</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.logger.Logger.check_wandb">
+<span class="sig-name descname"><span class="pre">check_wandb</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#utils.logger.Logger.check_wandb" title="Permalink to this definition"></a></dt>
+<dd><p>Check if logger is in wandb mode</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>True if the logger instance should use wandb according to config or constants</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.logger.Logger.initialize_wandb">
+<span class="sig-name descname"><span class="pre">initialize_wandb</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#utils.logger.Logger.initialize_wandb" title="Permalink to this definition"></a></dt>
+<dd><p>Initializes the wandb run</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.logger.Logger.log_wandb_artifact">
+<span class="sig-name descname"><span class="pre">log_wandb_artifact</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artifact_info</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#utils.logger.Logger.log_wandb_artifact" title="Permalink to this definition"></a></dt>
+<dd><p>Logs the input artifact to wandb (e.g. a dataset or config file)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_path</strong> – Path to the artifact to be logged</p></li>
+<li><p><strong>artifact_info</strong> – At least have to contain keys ‘name’ and ‘type’. ‘description’ and ‘metadata’ are optional</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.logger.Logger.add_row_to_wandb_table">
+<span class="sig-name descname"><span class="pre">add_row_to_wandb_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent:</span> <span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gantt_chart:</span> <span class="pre">&lt;module</span> <span class="pre">'PIL.Image'</span> <span class="pre">from</span> <span class="pre">'C:\\Anaconda\\lib\\site-packages\\PIL\\Image.py'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#utils.logger.Logger.add_row_to_wandb_table" title="Permalink to this definition"></a></dt>
+<dd><p>Add the recent gantt_chart and kwargs as row to the table in the record buffer.
+The table will be logged to wandb when calling dump</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>agent</strong> – Name of the agent whose results you want to log here</p></li>
+<li><p><strong>gantt_chart</strong> – Gantt chart image</p></li>
+<li><p><strong>kwargs</strong> – Additional results beside the gantt chart you want to log in the table (e.g. tardiness, makespan)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.logger.Logger.write_to_wandb_summary">
+<span class="sig-name descname"><span class="pre">write_to_wandb_summary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">evaluation_results</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.logger.Logger.write_to_wandb_summary" title="Permalink to this definition"></a></dt>
+<dd><p>Log results as summary to wandb</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>evaluation_results</strong> – Dictionary with at least all evaluation result to be logged in this function</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-utils">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-utils" title="Permalink to this headline"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, AlphaMES-Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

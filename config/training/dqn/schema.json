@@ -1,0 +1,150 @@
+{
+    "title": "DQN schema",
+    "type": "object",
+    "properties": {
+        "algorithm": {
+            "type": "string"
+        },
+        "instances_file": {
+            "type": "string"
+        },
+        "saved_model_name": {
+            "type": "string"
+        },
+        "seed": {
+            "type": "integer",
+            "minimum": 0
+        },
+        "overwrite_split_seed": {
+            "type": "boolean"
+        },
+        "config_description": {
+            "type": "string"
+        },
+        "experiment_save_path": {
+            "type": "string"
+        },
+        "wandb_mode": {
+            "type": "integer"
+        },
+        "wandb_project": {
+            "type": "string"
+        },
+        "buffer_size": {
+            "type": "integer",
+            "minimum": 1
+        },
+        "training_starts": {
+            "type": "integer",
+            "minimum": 1
+        },
+        "train_freq": {
+            "type": "integer",
+            "minimum": 1
+        },
+        "gradient_steps": {
+            "type": "integer",
+            "minimum": 1
+        },
+        "gamma": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+        },
+        "batch_size": {
+            "type": "integer",
+            "minimum": 1
+        },
+        "learning_rate": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+        },
+        "target_net_update": {
+            "type": "integer",
+            "minimum": 1
+        },
+        "max_grad_norm": {
+            "type": "integer",
+            "minimum": 1
+        },
+        "initial_eps": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+        },
+        "final_eps": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+        },
+        "fraction_eps": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+        },
+        "layer": {
+            "type": "array"
+        },
+        "activation": {
+            "type": "string"
+        },
+        "total_timesteps": {
+            "type": "integer",
+            "minimum": 1
+        },
+            "train_test_split": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+        },
+            "test_validation_split": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+        },
+            "intermediate_test_interval": {
+            "type": "integer",
+            "minimum": 0
+        },
+        "environment": {
+            "type": "string"
+        },
+        "num_steps_max": {
+            "type": "integer",
+            "minimum": 1
+        },
+        "log_interval": {
+            "type": "integer",
+            "minimum": 1
+        },
+        "shuffle": {
+            "type": "boolean"
+        },
+        "reward_strategy": {
+            "type": "string"
+        },
+        "reward_scale": {
+            "type": "number"
+        },
+        "test_heuristics": {
+            "type": "array"
+        },
+        "success_metric": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "algorithm",
+        "instances_file",
+        "seed",
+        "config_description",
+        "total_instances",
+        "total_timesteps",
+        "train_test_split",
+        "test_validation_split",
+        "intermediate_test_interval",
+        "environment",
+        "test_heuristics"
+    ]
+}

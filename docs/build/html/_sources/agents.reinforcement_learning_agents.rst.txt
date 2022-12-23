@@ -1,0 +1,27 @@
+Reinforcement Learning Agents
+==============================
+
+DQN
+-----------------------------------------
+
+.. automodule:: agents.reinforcement_learning.dqn
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+PPO
+-----------------------------------------
+
+.. automodule:: agents.reinforcement_learning.ppo
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+PPO\_masked
+-------------------------------------------------
+
+.. automodule:: agents.reinforcement_learning.ppo_masked
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Benchmark Datasets &mdash; Schlably 0.0.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Heuristics" href="agents.heuristic.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Schlably
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Table of Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="api.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="agents.reinforcement_learning.html">Reinforcement Learning Agents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="agents.reinforcement_learning.html#reinforcement-learning-functions">Reinforcement Learning Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environments.html">Environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="visuals_generator.html">Visuals Generator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_generator.html">Data Generator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="solvers.html">Solvers</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Benchmark Datasets</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#how-the-instances-were-generated">How the instances were generated</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#overview-of-the-benchmark-datasets">Overview of the benchmark datasets</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Schlably</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="api.html">API Reference</a> &raquo;</li>
+      <li>Benchmark Datasets</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/benchmark_datasets.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="benchmark-datasets">
+<h1>Benchmark Datasets<a class="headerlink" href="#benchmark-datasets" title="Permalink to this heading"></a></h1>
+<p>Schlably comes with pre-set benchmark datasets. These datasets include 50 instances each and are located
+in the <em>data/benchmark_instances/jssp</em> and <em>data/benchmark_instances/jssp</em> folder along with solutions for each instance,
+respectively for JSSP and FJSSP instances.</p>
+<section id="how-the-instances-were-generated">
+<h2>How the instances were generated<a class="headerlink" href="#how-the-instances-were-generated" title="Permalink to this heading"></a></h2>
+<p><strong>Job</strong></p>
+<p>As common for the JSSPs and FJSSPS, all instances consist of jobs consisting of tasks.</p>
+<p><strong>Task</strong></p>
+<p>Each task has a <strong>processing time</strong> that is sampled uniformly from a list of processing times.
+In these benchmark datasets, these processing times were [2, 4, 6, 8, 10].
+In the JSSP, the number of tasks is the same as the number of machines and each task is assigned
+to exactly one machines.</p>
+<p>In the FJSSP, the number of tasks is the same as the number of machines and each task can be assigned to
+one of multiple machines. The number of applicable machines per task was sampled uniformly from the interval
+[1, number_of_machines] and the machines were sampled uniformly from the set of all machines.</p>
+<p>Whats more, we provide datasets where an additional resource (tools), much like the machines, is needed
+per task. The logic is exactly the same as for the machines, but the number of tools is either half
+that of the number of jobs</p>
+</section>
+<section id="overview-of-the-benchmark-datasets">
+<h2>Overview of the benchmark datasets<a class="headerlink" href="#overview-of-the-benchmark-datasets" title="Permalink to this heading"></a></h2>
+<p>The following table gives a brief overview of the benchmark datasets:</p>
+<table class="colwidths-given docutils align-default" id="id1">
+<caption><span class="caption-text">Overview benchmark datasets</span><a class="headerlink" href="#id1" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 44%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Foldername/File</p></th>
+<th class="head"><p># jobs</p></th>
+<th class="head"><p># tasks p. job</p></th>
+<th class="head"><p># machines</p></th>
+<th class="head"><p>(F)JSSP</p></th>
+<th class="head"><p># tools</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>jssp/benchmark_job3_task4_tools0.pkl</p></td>
+<td><p>3</p></td>
+<td><p>4</p></td>
+<td><p>4</p></td>
+<td><p>jssp</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><td><p>jssp/benchmark_job3_task4_tools3.pkl</p></td>
+<td><p>3</p></td>
+<td><p>4</p></td>
+<td><p>4</p></td>
+<td><p>jssp</p></td>
+<td><p>3</p></td>
+</tr>
+<tr class="row-even"><td><p>jssp/benchmark_job6_task6_tools0.pkl</p></td>
+<td><p>6</p></td>
+<td><p>6</p></td>
+<td><p>6</p></td>
+<td><p>jssp</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><td><p>jssp/benchmark_job6_task6_tools3.pkl</p></td>
+<td><p>6</p></td>
+<td><p>6</p></td>
+<td><p>6</p></td>
+<td><p>jssp</p></td>
+<td><p>3</p></td>
+</tr>
+<tr class="row-even"><td><p>jssp/benchmark_job10_task10_tools0.pkl</p></td>
+<td><p>10</p></td>
+<td><p>10</p></td>
+<td><p>10</p></td>
+<td><p>jssp</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><td><p>jssp/benchmark_job10_task10_tools5.pkl</p></td>
+<td><p>6</p></td>
+<td><p>6</p></td>
+<td><p>4</p></td>
+<td><p>jssp</p></td>
+<td><p>5</p></td>
+</tr>
+<tr class="row-even"><td><p>fjssp/benchmark_job3_task4_tools0.pkl</p></td>
+<td><p>3</p></td>
+<td><p>4</p></td>
+<td><p>4</p></td>
+<td><p>fjssp</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><td><p>fjssp/benchmark_job3_task4_tools3.pkl</p></td>
+<td><p>3</p></td>
+<td><p>4</p></td>
+<td><p>4</p></td>
+<td><p>fjssp</p></td>
+<td><p>3</p></td>
+</tr>
+<tr class="row-even"><td><p>fjssp/benchmark_job6_task6_tools0.pkl</p></td>
+<td><p>6</p></td>
+<td><p>6</p></td>
+<td><p>6</p></td>
+<td><p>fjssp</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><td><p>fjssp/benchmark_job6_task6_tools3.pkl</p></td>
+<td><p>6</p></td>
+<td><p>6</p></td>
+<td><p>6</p></td>
+<td><p>fjssp</p></td>
+<td><p>3</p></td>
+</tr>
+<tr class="row-even"><td><p>fjssp/benchmark_job10_task10_tools0.pkl</p></td>
+<td><p>10</p></td>
+<td><p>10</p></td>
+<td><p>10</p></td>
+<td><p>fjssp</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><td><p>fjssp/benchmark_job10_task10_tools5.pkl</p></td>
+<td><p>6</p></td>
+<td><p>6</p></td>
+<td><p>4</p></td>
+<td><p>fjssp</p></td>
+<td><p>5</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="agents.heuristic.html" class="btn btn-neutral float-left" title="Heuristics" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, AlphaMES-Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

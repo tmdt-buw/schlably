@@ -1,0 +1,23 @@
+##############################################################################
+###                         wandb sweep                                    ###
+##############################################################################
+method: random
+metric:
+  goal: minimize
+  name: success_metric
+parameters:
+  seed:
+    values: [1, 2, 3, 4, 5]
+  learning_rate:
+    max: 0.005
+    min: 0.001
+
+program: src/agents/train.py
+
+# needed to run agents.train as module and avoid ModuleNotFoundError
+command:
+  - python
+  - -m
+  - src.agents.train
+  - -fp
+  - training/ppo_masked/config_job3_task4_tools0.yaml

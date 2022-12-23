@@ -1,0 +1,94 @@
+##############################################################################
+###                         Training                                       ###
+##############################################################################
+
+# (R)   [string]  RL algorithm you want to use - This template is for dqn
+algorithm: dqn
+# (R)   [string]  Path to the file with generated data that to be used for training
+instances_file: jssp/config_job3_task4_tools0.pkl
+# (O)   [string]  The finished model is saved under this name. Alternatively set to <automatic>, then it will be
+                  # replaced with the current DayMonthYearHourMinute
+saved_model_name: example_dqn_agent
+# (R)   [int]     Seed for all pseudo random generators (random, numpy, torch)
+seed: 0
+# (O)   [bool]    Bool, if the train-test-split of instances should remain the same (1111) and be independent of the
+                  # random seed. This is useful for hyperparameter-sweeps with multiple random seeds to keep the same
+                  # test instances for comparability. Irrelevant, if the random seed across runs remains the same.
+overwrite_split_seed: False
+# (R)   [string]  Set an individual description that you can identify this training run  more easily later on.
+                  # This will be used in "weights and biases" as well
+config_description: tasks_3x4
+# (O)   [string]  Set a directory where you want to save the agent model
+experiment_save_path: models
+# (O)   [int]:    wandb mode choose: choose from [0: no wandb, 1: wandb_offline, 2: wandb_online]
+wandb_mode: 0
+# (O)   [string]  Set a wandb project where you want to upload all wandb logs
+wandb_project: project-1
+
+# --- dqn parameter ---
+# (O)   [int]     Size of the memory buffer = max number of rollouts that stored before the oldest are deleted
+buffer_size: 1_000_000
+# (O)   [int]     Number of steps after which training begins
+training_starts: 50_000
+# (O)   [int]     Number of environment steps between two trainings (the neural network trains on data in the buffer)
+train_freq: 4
+# (O)   [int]     Number of gradient steps to take in every training
+gradient_steps: 1
+# (O)   [float]   Factor to discount future rewards
+gamma: 0.99
+# (O)   [int]     Batch size into which the rollout data gets split
+batch_size: 256
+# (O)   [float]   Learning rate for the network updates
+learning_rate: 0.002
+# (O)   [int]     Number of environment steps between target_net_updates. Should be smaller than total_timesteps.
+target_net_update: 10_000
+# (O)   [int]     Value to clip the gradient for the update of the q_net
+max_grad_norm: 10
+# (O)   [float]   Initial epsilon value (random action probability for exploration purposes)
+initial_eps: 1.0
+# (O)   [float ]  Final epsilon value (random action probability for exploration purposes)
+final_eps: 0.05
+# (O)   [float]   When this percentage of total timesteps is reached, epsilon takes the final_eps value
+fraction_eps: 0.1
+# (O) List[int] List with dimension for the hidden layers (length of list = number of hidden layers) used in the net
+layer:  [ 64, 64 ]
+# (O) [str] String for the activation function of the net
+            # Note, the activation function has to be from the torch.nn module (e.g. ReLU)
+activation: 'ReLU'
+# (R)   [int]     Maximum number of steps that the agent can interact with the env. Limits the training process.
+total_timesteps: 1_000_000
+# (R)   [int]     Maximum number of instances shown to the agent. Limits the training process
+total_instances: 10_000
+# (R)   [float]   Range between 0 and 1. How much (percentually) of the generated data will be used for training.
+train_test_split: 0.8
+# (R)   [float]   Range between 0 and 1. How much (percentually) of the remaining data (1-train_test_split) will be
+                  # used for training.
+test_validation_split: 0.8
+# (R)   [int]     Number of environment step calls between intermediate (validation) tests
+intermediate_test_interval: 10_000
+
+# --- env (Environment) parameters ---
+# (R)   [str]     Environment you want to use. The vanilla case is env_tetris_scheduling.
+environment: env_tetris_scheduling_indirect_action
+# (O)   [int]     Maximum number of steps the agent can take before the env interrupts the episode.
+                  # Should be greater than the minimum number of agent actions required to solve the problem.
+                  # Can be larger that the minimum number of agent actions, if e.g. invalid actions or skip actions are
+                  # implemented
+num_steps_max: 90
+# (O)   [int]     After this number of episodes, the env prints the last episode result in the console
+log_interval: 10
+# (O)   [bool]    All initial task instances are shuffled before being returned to the agent as observation
+shuffle: False
+# (O)   [str]     The reward strategy determines, how the reward is computed. Default is 'dense_makespan_reward'
+reward_strategy: dense_makespan_reward
+# (O)   [int]     The reward scale is a float by which the reward is multiplied to increase/decrease the reward signal
+                  # strength
+reward_scale: 1
+
+# --- benchmarking
+# (R)   List[str] List of all heuristics and algorithms against which to benchmark
+test_heuristics: ['rand', 'EDD', 'SPT', 'MTR', 'LTR']
+# (O)   [str]     Metric name in the final evaluation table which summarizes the training success best. See
+                  # EvaluationHandler.evaluate_test() in utils.evaluations for suitable metrics or add one.
+                  # In a wandb hyperparameter sweep this will be usable as objective metric.
+success_metric:   makespan_mean
