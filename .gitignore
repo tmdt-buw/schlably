@@ -33,7 +33,6 @@ data/logs/*
 !data/logs/.gitkeep
 
 data/models/*
-!data/models/example_dqn_agent.pkl
 !data/models/example_ppo_agent.pkl
 !data/models/example_ppo_masked_agent.pkl
 !data/models/solver_solution
