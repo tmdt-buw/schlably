@@ -1,0 +1,7 @@
+# Required
+version: 2
+
+# Set the Python version to 3.10
+build:
+  tools:
+    python: "3.10"
