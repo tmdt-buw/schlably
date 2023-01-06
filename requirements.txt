@@ -3,7 +3,7 @@
 #############################################
 gym==0.26.1
 jsonschema==4.16.0
-matplotlib==3.5.3
+matplotlib==3.6.0
 numpy==1.23.3
 ortools==9.4.1874
 Pillow==9.2.0
