@@ -20,7 +20,7 @@ We believe that this makes it easier to apply small changes without having to de
 
 Github: https://github.com/tmdt-buw/schlably
 
-Paper: arxiv link
+Paper: tba
 
 Main Features
 -------------
