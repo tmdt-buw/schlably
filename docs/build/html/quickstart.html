@@ -112,7 +112,7 @@ The trained model can be accessed via the experiment_save_path and saved_model_n
 <p>As aforementioned, calling <code class="docutils literal notranslate"><span class="pre">train.py</span></code> automatically tests the model once training is complete. If you want to test a certain model again, or benchmark it against other heuristics, proceed as follows:</p>
 <ol class="arabic">
 <li><p>As in training, you need to point to a testing config file like the ones provided in <em>config/testing</em>.  You may change entries according to your needs.
-We provide a pre-trained PPO model. Thus, creating a config in <em>config/testing/ppo</em> and assigning <em>example_ppo_agent</em> to <em>saved_model_name</em> allows you to test without training first.</p></li>
+We provide a pre-trained masked PPO model. Thus, creating a config in <em>config/testing/ppo_masked</em> and assigning <em>example_ppo_masked_agent</em> to <em>saved_model_name</em> allows you to test without training first.</p></li>
 <li><p>Run</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python -m src.agents.test -fp testing/ppo/&lt;your_testing_config&gt;.yaml
 </pre></div>

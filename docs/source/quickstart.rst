@@ -40,7 +40,7 @@ Testing
 As aforementioned, calling ``train.py`` automatically tests the model once training is complete. If you want to test a certain model again, or benchmark it against other heuristics, proceed as follows:
 
 #. As in training, you need to point to a testing config file like the ones provided in *config/testing*.  You may change entries according to your needs.
-   We provide a pre-trained PPO model. Thus, creating a config in *config/testing/ppo* and assigning *example_ppo_agent* to *saved_model_name* allows you to test without training first.
+   We provide a pre-trained masked PPO model. Thus, creating a config in *config/testing/ppo_masked* and assigning *example_ppo_masked_agent* to *saved_model_name* allows you to test without training first.
 
 #. Run
 

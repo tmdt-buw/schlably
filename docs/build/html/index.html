@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Schlably! &mdash; Schlably 0.0.1 documentation</title>
+  <title>Schlably &mdash; Schlably 0.0.1 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -37,8 +37,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Table of Contents</span></p>
-<ul>
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
@@ -59,7 +58,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="#" class="icon icon-home"></a> &raquo;</li>
-      <li>Schlably!</li>
+      <li>Schlably</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -69,29 +68,31 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="schlably">
-<h1>Schlably!<a class="headerlink" href="#schlably" title="Permalink to this heading"></a></h1>
-<p><strong>Schlably - A Python-Based Scheduling Laboratory for Reinforcement Learning Solutions</strong></p>
+  <a class="reference internal image-reference" href="_images/Logo.svg"><img alt="logo" src="_images/Logo.svg" width="100%" /></a>
+<section id="schlably">
+<h1>Schlably<a class="headerlink" href="#schlably" title="Permalink to this heading"></a></h1>
+<p><strong>A Python-Based Scheduling Laboratory for Reinforcement Learning Solutions</strong></p>
 <p>Schlably is a Python-Based framework for experiments on scheduling problems with Deep Reinforcement Learning (DRL).
 It features an extendable gym environment and DRL-Agents along with code for data generation, training and testing.</p>
 <p>Schlably was developed such that modules may be used as they are, but also may be customized to fit the needs of the user.
 While the framework works out of the box and can be adjusted through config files, some changes are intentionally only possible through changes to the code.
 We believe that this makes it easier to apply small changes without having to deal with complex multi-level inheritances.</p>
-<p>Github: url</p>
+<p>Github: <a class="reference external" href="https://github.com/tmdt-buw/schlably">https://github.com/tmdt-buw/schlably</a></p>
 <p>Paper: arxiv link</p>
 </section>
 <section id="main-features">
 <h1>Main Features<a class="headerlink" href="#main-features" title="Permalink to this heading"></a></h1>
 <ul class="simple">
-<li><p>Reinforcement Learning</p></li>
-<li><p>Clean Code</p></li>
-<li><p>…</p></li>
+<li><p>Python-based</p></li>
+<li><p>Includes JSSP, FJSSP and the option for resource constrainted scheduling problems</p></li>
+<li><p>Includes DRL-Agents</p></li>
+<li><p>Easy to use</p></li>
+<li><p>Easy to extend and adjust</p></li>
 </ul>
 </section>
 <section id="user-guide">
 <h1>User Guide<a class="headerlink" href="#user-guide" title="Permalink to this heading"></a></h1>
 <div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">Table of Contents</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a><ul>
@@ -102,54 +103,19 @@ We believe that this makes it easier to apply small changes without having to de
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="custom_problem_setting.html">Custom Problem Settings</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="custom_problem_setting.html#creating-the-problem-instances">Creating the problem instances</a></li>
-<li class="toctree-l3"><a class="reference internal" href="custom_problem_setting.html#training-the-agents">Training the agents</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="custom_problem_setting.html">Custom Problem Settings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="looping_over_config_params.html">Looping over Configuration Parameters</a></li>
 <li class="toctree-l2"><a class="reference internal" href="weights_and_biases_sweeps.html">Weights &amp; Biases sweeps</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API Reference</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="agents.reinforcement_learning.html">Reinforcement Learning Agents</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="agents.reinforcement_learning.html#module-agents.reinforcement_learning.dqn">DQN</a></li>
-<li class="toctree-l3"><a class="reference internal" href="agents.reinforcement_learning.html#module-agents.reinforcement_learning.ppo">PPO</a></li>
-<li class="toctree-l3"><a class="reference internal" href="agents.reinforcement_learning.html#module-agents.reinforcement_learning.ppo_masked">PPO_masked</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="agents.reinforcement_learning.html#reinforcement-learning-functions">Reinforcement Learning Functions</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="agents.reinforcement_learning.html#module-agents.train">Training Functions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="agents.reinforcement_learning.html#module-agents.test">Testing Functions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="agents.reinforcement_learning.html#module-agents.intermediate_test">Util functions</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="environments.html">Environments</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="environments.html#module-environments.env_tetris_scheduling">Tetris_scheduling Environment</a></li>
-<li class="toctree-l3"><a class="reference internal" href="environments.html#module-environments.env_tetris_scheduling_indirect_action">Tetris_scheduling_indirect_action Environment</a></li>
-<li class="toctree-l3"><a class="reference internal" href="environments.html#module-environments.environment_loader">Util Functions</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="visuals_generator.html">Visuals Generator</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="visuals_generator.html#module-visuals_generator.gantt_chart">Gantt-Chart Generator</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="data_generator.html">Data Generator</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="data_generator.html#module-data_generator.instance_factory">Instance Factory</a></li>
-<li class="toctree-l3"><a class="reference internal" href="data_generator.html#module-data_generator.sp_factory">Scheduling Problem Factory</a></li>
-<li class="toctree-l3"><a class="reference internal" href="data_generator.html#module-data_generator.task">Task Class</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="solvers.html">Solvers</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="agents.solver.html">Exact solver</a></li>
-<li class="toctree-l3"><a class="reference internal" href="agents.heuristic.html">Heuristics</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="benchmark_datasets.html">Benchmark Datasets</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="benchmark_datasets.html#how-the-instances-were-generated">How the instances were generated</a></li>
-<li class="toctree-l3"><a class="reference internal" href="benchmark_datasets.html#overview-of-the-benchmark-datasets">Overview of the benchmark datasets</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="agents.reinforcement_learning.html">Reinforcement Learning Agents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="agents.reinforcement_learning.html#reinforcement-learning-functions">Reinforcement Learning Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environments.html">Environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="visuals_generator.html">Visuals Generator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_generator.html">Data Generator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="solvers.html">Solvers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="benchmark_datasets.html">Benchmark Datasets</a></li>
 </ul>
 </li>
 </ul>
