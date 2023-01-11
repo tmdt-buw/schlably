@@ -24,11 +24,11 @@ Paper: tba
 
 Main Features
 -------------
-- Python-based
-- Includes JSSP, FJSSP and the option for resource constrainted scheduling problems
-- Includes DRL-Agents
-- Easy to use
-- Easy to extend and adjust
+* Python-based
+* Includes JSSP, FJSSP and the option for resource constrainted scheduling problems
+* Includes DRL-Agents
+* Easy to use
+* Easy to extend and adjust
 
 User Guide
 ----------
