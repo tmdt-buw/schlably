@@ -18,12 +18,14 @@ Schlably was developed such that modules may be used as they are, but also may b
 While the framework works out of the box and can be adjusted through config files, some changes are intentionally only possible through changes to the code.
 We believe that this makes it easier to apply small changes without having to deal with complex multi-level inheritances.
 
-Github: https://github.com/tmdt-buw/schlably
+`Github Repository <https://github.com/tmdt-buw/schlably>`_
 
-Paper: tba
+`Link to arXiv paper <http://arxiv.org/abs/2301.04182>`_
 
 Main Features
 -------------
+The main features of Schlably include, but are not limited to:
+
 * Python-based
 * Includes JSSP, FJSSP and the option for resource constrainted scheduling problems
 * Includes DRL-Agents
@@ -39,7 +41,6 @@ User Guide
    quickstart
    tutorials
    api
-
 
 
 Indices and tables

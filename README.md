@@ -9,6 +9,8 @@ While the framework works out of the box and can be adjusted through config file
 We believe that this makes it easier to apply small changes without having to deal with complex multi-level inheritances.
 
 Please see the documentation for more detailed information and tutorials.
+
+Check out the official [publication on arXiv](http://arxiv.org/abs/2301.04182)
 ​
 ## Install
 To install all necessary packages run 

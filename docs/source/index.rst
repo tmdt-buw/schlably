@@ -18,9 +18,9 @@ Schlably was developed such that modules may be used as they are, but also may b
 While the framework works out of the box and can be adjusted through config files, some changes are intentionally only possible through changes to the code.
 We believe that this makes it easier to apply small changes without having to deal with complex multi-level inheritances.
 
-Github: https://github.com/tmdt-buw/schlably
-
-Paper: tba
+Also check out our:
+`Github Repository <https://github.com/tmdt-buw/schlably>`_
+`ArXiv paper <http://arxiv.org/abs/2301.04182>`_
 
 Main Features
 -------------
@@ -40,7 +40,6 @@ User Guide
    quickstart
    tutorials
    api
-
 
 
 Indices and tables
