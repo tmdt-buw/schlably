@@ -2,10 +2,11 @@
    sphinx-quickstart on Wed Jul 20 09:04:25 2022.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
+.. only:: html
 
-.. image:: images/Logo.svg
-   :width: 100%
-   :alt: logo
+   .. figure:: images/Logo_gif.gif
+      :width: 100%
+      :alt: logo_gif
 
 Schlably
 --------
@@ -19,7 +20,9 @@ While the framework works out of the box and can be adjusted through config file
 We believe that this makes it easier to apply small changes without having to deal with complex multi-level inheritances.
 
 Also check out our:
+
 `Github Repository <https://github.com/tmdt-buw/schlably>`_
+
 `ArXiv paper <http://arxiv.org/abs/2301.04182>`_
 
 Main Features

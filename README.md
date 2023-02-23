@@ -8,12 +8,13 @@ Schlably was developed such that modules may be used as they are, but also may b
 While the framework works out of the box and can be adjusted through config files, some changes are intentionally only possible through changes to the code.
 We believe that this makes it easier to apply small changes without having to deal with complex multi-level inheritances.
 
-Please see the documentation for more detailed information and tutorials.
+Please see the [documentation](https://schlably.readthedocs.io/en/latest/index.html) for more detailed information and tutorials.
 
-Check out the official [publication on arXiv](http://arxiv.org/abs/2301.04182)
+Check out the official [Preprint on arXiv](http://arxiv.org/abs/2301.04182)
 ​
 ## Install
-To install all necessary packages run 
+Schlably, in its current version, only supports Python 3.10 and may be incompatible to other versions (e.g. 3.11).
+To install all necessary Python packages run
    ````bash
    pip install -r requirements.txt
    ````
@@ -29,10 +30,12 @@ you need to (create and) login with your account. Open a terminal and run:
 ### Data Generation
 To create your own data, or more precisely, instances of a scheduling problem, proceed as follows:
 1. Create a custom data generation configuration from one of the configs listed in [config/data_generation/fjssp](config/data_generation/fjssp) or [config/data_generation/jssp](config/data_generation/jssp) (e.g. change number of machines, tasks, tools, runtimes etc.) to specify the generated instances.  
-2. Run 
-   ``
+2. To generate the problem instances specified in your config, run 
+   ````bash
    python -m src.data_generator.instance_factory -fp data_generation/jssp/<your_data_generation_config>.yaml
-   ``
+   ````
+3. Please note that the file path needs to be given relative to the config directory of the project and that otherwise your config may not be found.
+   
 
 
 ​
@@ -43,9 +46,10 @@ To train your own model, proceed as follows:
    If you want to track your results online, create your project at wandb.ai and set config parameter wandb_mode to 1 (offline tracking) or 2 (online tracking)
    and specify *wandb_project* parameter in config file and *wandb_entity* constant in the [logger.py](src/utils/logger.py)
 2. Run 
-   ``
+   ````bash
    python -m src.agents.train -fp training/ppo/<your_training_config>.yaml
-   ``
+   ````
+3. Please note that the file path needs to be given relative to the config directory of the project and that otherwise your config may not be found.
 
 Immediately after training the model will be tested and benchmarked against all heuristics included in the TEST_HEURISTICS constant located in [src/agents/test.py](src/agents/test.py)
 The trained model can be accessed via the experiment_save_path and saved_model_name you specified in the training config.
@@ -57,10 +61,11 @@ As aforementioned, [train.py](src/agents/train.py) automatically tests the model
 1. As in training, you need to point to a testing config file like the ones provided in [config/testing](config/testing).  You may change entries according to your needs.
 We provide a pre-trained masked PPO model. Thus, creating a config in [config/testing/ppo_masked](config/testing/ppo_masked) and assigning *example_ppo_masked_agent* to *saved_model_name* allows you to test without training first.
 2. Run 
-   ``
+   ````bash
    python -m src.agents.test -fp testing/ppo_masked/<your_testing_config>.yaml
-   ``
-3. Optionally, you may use the parameter --plot-ganttchart to plot the test results.
+   ````
+3. Please note that the file path needs to be given relative to the config directory of the project and that otherwise your config may not be found.
+4. Optionally, you may use the parameter --plot-ganttchart to plot the test results.
 
 We have pre-implemented many common priority dispatching rules, such as Shortest Processing Time first, and a flexible optimal solver.
 
